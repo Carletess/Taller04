@@ -1,76 +1,51 @@
 package model;
 
-import java.util.Random;
 public class Entrada {
-
-	private int numero;
-	private TipoEntrada tipo;
-	private double precio;
-	private String estado;
+	private String tipoEntrada;
+	private String precio;
+	private boolean disponibilidad;
+	private EventoMusical evento;
 	private Asistente asistente;
 
-	public Entrada(int numero, TipoEntrada tipo, double precio, String estado, Asistente asistente) {
-		this.numero = numero;
-		this.tipo = tipo;
+	public Entrada(String tipoEntrada, String precio, boolean disponibilidad, EventoMusical evento, Asistente asistente) {
+		this.tipoEntrada = tipoEntrada;
 		this.precio = precio;
-		this.estado = estado;
+		this.disponibilidad = disponibilidad;
+		this.evento = evento;
 		this.asistente = asistente;
 	}
 
-	private int generarNumeroUnico() {
-		Random rand = new Random();
-		return rand.nextInt(1000000); // Puedes ajustar el rango según tus necesidades
+	public void comprar() {
+		if (this.disponibilidad) {
+			this.disponibilidad = false;
+			System.out.println("Entrada comprada con éxito.");
+		} else {
+			System.out.println("Error: La entrada no está disponible.");
+		}
 	}
 
-
-	public int getNumero() {
-		return numero;
+	public void cancelar() {
+		if (!this.disponibilidad) {
+			this.disponibilidad = true;
+			System.out.println("Entrada cancelada con éxito.");
+		} else {
+			System.out.println("Error: La entrada ya está disponible.");
+		}
 	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void mostrarDetalles() {
+		if (this.tipoEntrada != null && this.evento != null && this.asistente != null) {
+			System.out.println("Tipo de Entrada: " + this.tipoEntrada);
+			System.out.println("Precio: " + this.precio);
+			System.out.println("Disponibilidad: " + (this.disponibilidad ? "Disponible" : "No Disponible"));
+			System.out.println("Evento: " + this.evento.getNombreEvento());
+			System.out.println("Asistente: " + this.asistente.getInformacionContacto());
+		} else {
+			System.out.println("Error: La entrada no tiene detalles para mostrar.");
+		}
 	}
 
-	public TipoEntrada getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoEntrada tipo) {
-		this.tipo = tipo;
-	}
-
-	public double getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public Asistente getAsistente() {
-		return asistente;
-	}
-
-	public void setAsistente(Asistente asistente) {
-		this.asistente = asistente;
-	}
-
-	@Override
-	public String toString() {
-		return "Entrada{" +
-				"numero=" + numero +
-				", tipo=" + tipo +
-				", precio=" + precio +
-				", estado='" + estado + '\'' +
-				", asistente=" + asistente +
-				'}';
+	public String getTipoEntrada() {
+		return this.tipoEntrada;
 	}
 }

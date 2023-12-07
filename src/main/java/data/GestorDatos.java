@@ -1,74 +1,121 @@
 package data;
 
 import model.*;
+import java.io.*;
+import java.util.Locale;
 
 import java.io.*;
 
 public class GestorDatos {
-    public static EventoMusical leerArchivoEventos(EventoMusical eventoMusical, String direccionArchivo) {
-        String textoArchivo = "";
-        try {
-            File archivo = new File(direccionArchivo);
-            FileReader fr = new FileReader(archivo);
-            BufferedReader br = new BufferedReader(fr);
 
-            // Lee cada línea del archivo hasta que la línea sea nula
-            while ((textoArchivo = br.readLine()) != null) {
-                System.out.println("Encontré el archivo " + direccionArchivo);
-                String[] data = textoArchivo.split(",");
-                // Crea un nuevo evento musical y añádelo al sistema musical
-                eventoMusical.getAgenda().agregarEvento(new EventoMusical(data[0], /* Parsea la fecha y la hora según tu implementación */, data[3], eventoMusical.getAgenda()));
+    public boolean GuardarArchivo(Object objeto, String direccionArchivo) {
+        boolean lineaVacia=false;
+        try {
+            File file = new File(direccionArchivo);
+            if (!file.exists()) {
+                file.createNewFile();
+                lineaVacia=true;
             }
-            br.close();
-            fr.close();
+            FileWriter fw = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            //Si el documento no es nuevo y ya tiene registrados datos, se debe crear un salto de línea
+            if(!lineaVacia && file.length() > 0){
+                bw.newLine();
+            }
+            bw.write(objeto.toString());
+            System.out.println("Guardado: " + objeto.toString());
+            bw.close();
+            return true;
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Eventos.txt no disponible, favor contactar con administrador");
+            System.out.println("Error al ingresar dato, favor contactar con administrador: " + e.getMessage());
+            return false;
         }
-        return eventoMusical;
     }
 
-    public static EventoMusical leerArchivoArtistas(EventoMusical eventoMusical, String direccionArchivo) {
+    public void leerArchivoArtista( String direccionArchivoArtista, String direccionArchivoCafes) {
         String textoArchivo = "";
-
         try {
-            File archivo = new File(direccionArchivo);
+            File archivo = new File(direccionArchivoArtista);
             FileReader fr = new FileReader(archivo);
             BufferedReader br = new BufferedReader(fr);
-            // Lee cada línea del archivo hasta que la línea sea nula
-            while ((textoArchivo = br.readLine()) != null) {
-                String[] data = textoArchivo.split(",");
-                // Crea un nuevo artista y añádelo al sistema musical
-                eventoMusical.agregarArtista(data[0], data[1], data[3]);
+            //Lee cada línea del archivo hasta que la línea sea nula
+            while((textoArchivo = br.readLine()) != null){
+				/*String[] data = textoArchivo.split(",");
+				cafeteria.setNombreCafeteria(data[0]);
+				cafeteria.setDireccion(data[1]);
+				cafeteria.setRedesSociales(new RedesSociales[] {
+						RedesSociales.valueOf(data[2].toUpperCase()),
+						RedesSociales.valueOf(data[3].toUpperCase()),
+						RedesSociales.valueOf(data[4].toUpperCase())
+				});
+				leerArchivoCafes(cafeteria, direccionArchivoCafes);*/
             }
             br.close();
-            fr.close();
         } catch (Exception e) {
-            System.out.println("Artistas.txt no disponible, favor contactar con administrador");
+            System.out.println("erro al leer el archivo " + direccionArchivoCafes+ " : " + e.getMessage());
         }
-        return eventoMusical;
+        return ;
     }
 
-    public static EventoMusical leerArchivoAsistentes(EventoMusical eventoMusical, String direccionArchivo) {
+    public void leerArchivoEvento(String direccionArchivoEvento, String direccionArchivoCafes) {
         String textoArchivo = "";
-
         try {
-            File archivo = new File(direccionArchivo);
+            File archivo = new File(direccionArchivoEvento);
             FileReader fr = new FileReader(archivo);
             BufferedReader br = new BufferedReader(fr);
-            // Lee cada línea del archivo hasta que la línea sea nula
-            while ((textoArchivo = br.readLine()) != null) {
-                String[] data = textoArchivo.split(",");
-                // Crea un nuevo asistente y añádelo al sistema musical
-                eventoMusical.agregarAsistente(new Asistente(data[0], data[1], Integer.parseInt(data[2]), data[3], data[4]));
+            //Lee cada línea del archivo hasta que la línea sea nula
+            while((textoArchivo = br.readLine()) != null){
             }
             br.close();
-            fr.close();
         } catch (Exception e) {
-            System.out.println("Asistentes.txt no disponible, favor contactar con administrador");
+            System.out.println("erro al leer el archivo " + direccionArchivoCafes+ " : " + e.getMessage());
         }
-        return eventoMusical;
+        return ;
     }
 
-    // Otros métodos de la clase
+    public void leerArchivoAsistente(String direccionArchivoAsistente, String direccionArchivoCafes) {
+        String textoArchivo = "";
+        try {
+            File archivo = new File(direccionArchivoAsistente);
+            FileReader fr = new FileReader(archivo);
+            BufferedReader br = new BufferedReader(fr);
+            //Lee cada línea del archivo hasta que la línea sea nula
+            while((textoArchivo = br.readLine()) != null){
+            }
+            br.close();
+        } catch (Exception e) {
+            System.out.println("erro al leer el archivo " + direccionArchivoCafes+ " : " + e.getMessage());
+        }
+        return ;
+    }
+
+    public void leerArchivoEntrada(String direccionArchivoEntrada, String direccionArchivoCafes) {
+        String textoArchivo = "";
+        try {
+            File archivo = new File(direccionArchivoEntrada);
+            FileReader fr = new FileReader(archivo);
+            BufferedReader br = new BufferedReader(fr);
+            //Lee cada línea del archivo hasta que la línea sea nula
+            while((textoArchivo = br.readLine()) != null){
+            }
+            br.close();
+        } catch (Exception e) {
+            System.out.println("erro al leer el archivo " + direccionArchivoCafes+ " : " + e.getMessage());
+        }
+        return ;
+    }
+
+    public void borrarDatosArchivo(String direccionArchivo){
+        try {
+            File file = new File(direccionArchivo);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            FileWriter writer = new FileWriter(file);
+            BufferedWriter buff = new BufferedWriter(writer);
+            buff.close();
+        }catch (Exception e) {
+            System.out.println("Error al borrar datos del archivo: " + e.getMessage());
+        }
+    }
 }

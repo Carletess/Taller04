@@ -6,9 +6,9 @@ import java.awt.event.*;
 public class VentanaRegistroEvento extends Ventana {
 
     public VentanaRegistroEvento(String nombre, int largoX, int largoY) {
-        super(nombre, largoX, largoY);
+        super(nombre);
 
-        // Generate UI components for registering an event
+        // Genera componentes gráficos para registrar un evento
         generarEncabezado();
         generarInformacionEvento();
         generarTipoEvento();
@@ -21,7 +21,7 @@ public class VentanaRegistroEvento extends Ventana {
     }
 
     private void generarInformacionEvento() {
-        // Generate labels and input fields for event information
+        // Genera etiquetas y campos de entrada para la información del evento
 
         generarJLabel(new JLabel("Nombre del evento:"), 10, 70, 150, 25);
         JTextField txtNombreEvento = generarJTextField(170, 70, 200, 25);
@@ -34,8 +34,6 @@ public class VentanaRegistroEvento extends Ventana {
     }
 
     private void generarTipoEvento() {
-        // Generate radio buttons for event type
-
         JLabel lblTipoEvento = new JLabel("Tipo de evento:");
         lblTipoEvento.setBounds(10, 190, 150, 25);
         this.add(lblTipoEvento);
@@ -48,26 +46,31 @@ public class VentanaRegistroEvento extends Ventana {
         grupoTipoEvento.add(rdbtnConcierto);
         grupoTipoEvento.add(rdbtnFestival);
         grupoTipoEvento.add(rdbtnObra);
+
+        // Agrega los radio buttons a la ventana
+        this.add(rdbtnConcierto);
+        this.add(rdbtnFestival);
+        this.add(rdbtnObra);
     }
 
     private void generarListaArtistas() {
-        // Generate dropdown list for artists
+        // Genera lista desplegable para artistas
 
         JLabel lblArtistas = new JLabel("Artistas participantes:");
         lblArtistas.setBounds(10, 260, 150, 25);
         this.add(lblArtistas);
 
-        JComboBox cmbArtistas = generarListaDesplegable(new String[] {"Artista 1", "Artista 2", "Artista 3"}, 170, 260, 200, 25);
+        JComboBox<String> cmbArtistas = generarListaDesplegable(new String[]{"Artista 1", "Artista 2", "Artista 3"}, 170, 260, 200, 25);
     }
 
     private void generarBotones() {
-        // Generate buttons for saving and canceling
+        // Genera botones para guardar y cancelar
 
         JButton btnGuardar = generarBoton("Guardar", 10, 300, 100, 25);
         btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Implement logic for saving the event information
+                // Implementa la lógica para guardar la información del evento
                 // ...
             }
         });

@@ -1,98 +1,97 @@
 package model;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-import utils.*;
+import model.Artista;
+import model.Entrada;
 
 public class EventoMusical {
-	private Agenda agenda;
-
-	private String nombre;
-	private Date fecha;
+	private String nombreEvento;
 	private String lugar;
-	private ArrayList<Artista> artistas;
-	private ArrayList<Entrada> entradas;
-	private ArrayList<Asistente> asistentes;
+	private Date fechaEvento;
+	private ArrayList<Artista> artistasAsociados = new ArrayList<Artista>();
+	public ArrayList<Entrada> entradas = new ArrayList<Entrada>();
 
-	public EventoMusical(String nombre, Date fecha, String lugar) {
-		this.nombre = nombre;
-		this.fecha = fecha;
-		this.lugar = lugar;
-		this.artistas = new ArrayList<>();
-		this.entradas = new ArrayList<>();
-		this.asistentes = new ArrayList<>();
+	public String getNombreEvento() {
+		return this.nombreEvento;
 	}
 
-	// Getter and Setter methods
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setNombreEvento(String nombreEvento) {
+		this.nombreEvento = nombreEvento;
 	}
 
 	public String getLugar() {
-		return lugar;
+		return this.lugar;
 	}
 
 	public void setLugar(String lugar) {
 		this.lugar = lugar;
 	}
 
-	public EventoMusical(String nombre, Date fecha, LocalTime hora, String lugar, Agenda agenda) {
-		// ...
-		this.agenda = agenda;
+	public Date getFechaEvento() {
+		return this.fechaEvento;
 	}
 
-	public ArrayList<Artista> getArtistas() {
-		return artistas;
+	public void setFechaEvento(Date fechaEvento) {
+		this.fechaEvento = fechaEvento;
 	}
 
-	public void setArtistas(ArrayList<Artista> artistas) {
-		this.artistas = artistas;
+	public void getAttribute() {
+		throw new UnsupportedOperationException();
 	}
 
-	public ArrayList<Entrada> getEntradas() {
-		return entradas;
+	public void setAttribute(Object attribute) {
+		throw new UnsupportedOperationException();
 	}
 
-	public void setEntradas(ArrayList<Entrada> entradas) {
-		this.entradas = entradas;
+	public ArrayList<Artista> getArtistasAsosciados() {
+		throw new UnsupportedOperationException();
 	}
 
-	public ArrayList<Asistente> getAsistentes() {
-		return asistentes;
-	}
+	public void setArtista(Artista artista) {
 
-	public void setAsistentes(ArrayList<Asistente> asistentes) {
-		this.asistentes = asistentes;
-	}
-
-	public boolean agregarArtista(String nombreArtistico, String rut, String generoMusical) {
-		// Check if the artist with the given ID is already in the list
-		for (Artista existingArtista : this.artistas) {
-			if (existingArtista.getRut().equals(rut)) {
-				System.out.println("El artista con RUT " + rut + " ya está registrado.");
-				return false;
-			}
+		if (artista != null) {
+			this.artistasAsociados.add(artista);
+		} else {
+			System.out.println("Error: El artista no puede ser nulo.");
 		}
+	}
 
-		// If not, create a new artist and add them to the list
-		Artista artista = new Artista(nombreArtistico, rut, generoMusical);
-		this.artistas.add(artista);
-		System.out.println("Artista registrado correctamente.");
-		return true;
+	public EventoMusical(String nombreEvento, Date fecha, String lugar) {
+		this.nombreEvento = nombreEvento;
+		this.fechaEvento = fecha;
+		this.lugar = lugar;
+		this.artistasAsociados = new ArrayList<>();
+	}
+	public void eliminarArtista(Artista artista) {
+		if (this.artistasAsociados.contains(artista)) {
+			this.artistasAsociados.remove(artista);
+		} else {
+			System.out.println("Error: El artista no existe en la lista.");
+		}
+	}
+
+	public void mostrarDetalles() {
+		if (this.nombreEvento != null && this.fechaEvento != null && this.lugar != null) {
+			System.out.println("Nombre del Evento: " + this.nombreEvento);
+			System.out.println("Fecha: " + this.fechaEvento);
+			System.out.println("Lugar: " + this.lugar);
+			System.out.println("Artistas: ");
+			for (Artista artista : this.artistasAsociados) {
+				System.out.println(artista.getNombreArtistico());
+			}
+		} else {
+			System.out.println("Error: El evento musical no tiene detalles para mostrar.");
+		}
+	}
+	public void crearEvento(String nombreEvento, Date fecha, String lugar) {
+		if (nombreEvento != null && fecha != null && lugar != null) {
+			this.nombreEvento = nombreEvento;
+			this.fechaEvento = fecha;
+			this.lugar = lugar;
+		} else {
+			System.out.println("Error: El nombre del evento, la fecha y el lugar no pueden ser nulos.");
+		}
 	}
 }
